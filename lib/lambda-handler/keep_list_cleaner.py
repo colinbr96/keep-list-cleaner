@@ -19,20 +19,29 @@ def handler(event, context):
         list = keep.get(keep_note_id)
         print(f"Got list \"{list.title}\" with {len(list.items)} items")
 
+        num_deleted = 0
+        num_renamed = 0
+
         for list_item in list.unchecked + list.checked:
             formatted_name = list_item.text.strip().title()
 
             if formatted_name in seen_names:
                 print(f"Removed Duplicate: {formatted_name}")
                 list_item.delete()
+                num_deleted += 1
                 continue
 
-            seen_names.add(formatted_name)
-            list_item.text = formatted_name
+            if formatted_name != list_item.text:
+                print(f"Renamed: {list_item.text} -> {formatted_name}")
+                list_item.text = formatted_name
+                num_renamed += 1
 
-        print("Number of items after cleanup:", len(list.items))
-        print("Syncing to Keep...")
-        keep.sync()
+            seen_names.add(formatted_name)
+
+        print(f"{num_deleted} items deleted, {num_renamed} items renamed")
+        if num_deleted or num_renamed:
+            print("Syncing to Keep...")
+            keep.sync()
 
         print("Done")
         return {
