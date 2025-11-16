@@ -20,7 +20,7 @@ These steps are based on the steps from gkeepapi's [Authenticating](https://gkee
 3. Run the following script. Input your email address, the `oauth_token` value, and `0123456789abcdef` for the Android token.
 
     ```sh
-    docker run --rm -it --entrypoint //bin/sh python:3 -c 'pip install gpsoauth; python3 -c '\''print(__import__("gpsoauth").exchange_token(input("Email: "), input("OAuth Token: "), input("Android ID: ")))'\'
+    MSYS_NO_PATHCONV=1 docker run --rm -it --entrypoint /bin/sh python:3 -c 'pip install gpsoauth; python3 -c '\''print(__import__("gpsoauth").exchange_token(input("Email: "), input("OAuth Token: "), input("Android ID: ")))'\'
     ```
 
 4. The script will print a Python dict with the key `"Token"`. Copy the token value.
