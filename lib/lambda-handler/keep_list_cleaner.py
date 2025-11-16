@@ -49,6 +49,4 @@ def handler(event, context):
         }
     except Exception as ex:
         print("Exception in handler", ex)
-        return {
-            "statusCode": 500,
-        }
+        raise
