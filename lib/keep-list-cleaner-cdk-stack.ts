@@ -33,7 +33,7 @@ export class KeepListCleanerCdkStack extends cdk.Stack {
     });
 
     const rule = new events.Rule(this, 'KeepListCleanerRule', {
-      schedule: events.Schedule.rate(cdk.Duration.hours(2)),
+      schedule: events.Schedule.rate(cdk.Duration.hours(1)),
     });
     rule.addTarget(new targets.LambdaFunction(keepListCleanerFn));
   }
