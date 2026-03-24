@@ -25,7 +25,7 @@ def handler(event, context):
         for list_item in list.unchecked + list.checked:
             formatted_name = list_item.text.strip().title()
 
-            if formatted_name in seen_names:
+            if formatted_name in seen_names and list_item.checked:
                 print(f"Removed Duplicate: {formatted_name}")
                 list_item.delete()
                 num_deleted += 1
